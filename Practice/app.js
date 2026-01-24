@@ -58,9 +58,47 @@ else{
 }
 }
 
+function home(req,res){
+    res.end('welcome home')
+}
+
+
+function shop(req,res){
+    res.end('welcome to shop')
+}
+
+function admin(req,res){
+    res.end('welcome admin')
+}
+
 const server = http.createServer((req,res) =>{
 
-runMiddlewares(req,res,[logger,guard,shop])
+logger(req,res,() =>{
+    //home
+    if(req.url ==='/'){
+        home(req,res)
+    }
+
+    //shop
+    else if(req.url === '/shop'){
+        shop(req,res);
+    }
+
+    //admin
+    else if(req.url === '/admin'){
+        guard(req,res,()=>{
+            admin(req,res);
+        })
+
+        
+    }
+
+    // 404
+    else {
+      res.statusCode = 404;
+      res.end('Page not found');
+    }
+})
 
 })
 
