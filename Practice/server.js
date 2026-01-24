@@ -1,3 +1,5 @@
+//Creating a server using http.createServer() method
+
 // const http = require('http');
 
 // const server = http.createServer((request, response) => {
@@ -57,11 +59,14 @@
   
 // });
 
+//Here server listens on port 3000 :
 // server.listen(3000, () => {
 //   console.log('Server running on http://localhost:3000');
 //   console.log('Now with colorful HTML pages! 🎨');
 // });
 
+
+//Here below is the code for form handeling
 // const http = require('http');
 
 // const server = http.createServer((request, response) => {
@@ -264,6 +269,7 @@
 // });
 
 
+//Learning setTimeOut and knowing concepts of event loops and starvation
 // console.log("hii harsh")
 
 // let hi = () =>{ 
@@ -294,5 +300,5 @@
 //   console.log('Processing other things...');
 // });
 
- server.listen(3000);
+// server.listen(3000);
 
