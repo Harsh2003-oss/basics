@@ -31,6 +31,13 @@ function runMiddlewares(req,res,middlewares){
     next();
 }
 
+function logger(req,res,next){
+    console.log(
+        `${req.method} ${req.url} - ${new Date().toLocaleTimeString()} `
+    )
+next();
+}
+
 function shop(req,res,next){
   console.log('welcome to shop')
   console.log('items available',shopData)
@@ -53,7 +60,7 @@ else{
 
 const server = http.createServer((req,res) =>{
 
-runMiddlewares(req,res,[guard,shop])
+runMiddlewares(req,res,[logger,guard,shop])
 
 })
 
