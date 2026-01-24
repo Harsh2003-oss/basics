@@ -15,21 +15,21 @@ fs.readFile('./data.json','Utf8',(err,data)=>{
     }
 })
 
-function runMiddlewares(req,res,middlewares){
-    let index = 0;
+// function runMiddlewares(req,res,middlewares){
+//     let index = 0;
 
-    function next(){
-        if(index>=middlewares.length){
-            res.end('continue shopping')
-            return;
-        }
+//     function next(){
+//         if(index>=middlewares.length){
+//             res.end('continue shopping')
+//             return;
+//         }
 
-        const current =   middlewares[index];
-        index++;
-        current(req,res,next)
-    }
-    next();
-}
+//         const current =   middlewares[index];
+//         index++;
+//         current(req,res,next)
+//     }
+//     next();
+// }
 
 function logger(req,res,next){
     console.log(
@@ -38,11 +38,6 @@ function logger(req,res,next){
 next();
 }
 
-function shop(req,res,next){
-  console.log('welcome to shop')
-  console.log('items available',shopData)
-  next();
-}
 
 function guard(req,res,next){
   console.log('Hello sir')
