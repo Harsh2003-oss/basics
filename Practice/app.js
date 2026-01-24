@@ -1,8 +1,23 @@
 
 const http = require('http');
 
+const fs = require('fs')
+
+let shopData = [];
+
+fs.readFile('./data.json','Utf8',(err,data)=>{
+    if(err){
+        console.log('error reading file')
+    }
+    else{
+        shopData = JSON.parse(data);
+        console.log("data loaded",shopData)
+    }
+})
+
 function shop(req,res,next){
   console.log('welcome to shop')
+  console.log('items available',shopData)
   next();
 }
 
