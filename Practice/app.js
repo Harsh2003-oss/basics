@@ -15,6 +15,22 @@ fs.readFile('./data.json','Utf8',(err,data)=>{
     }
 })
 
+function runMiddlewares(req,res,middlewares){
+    let index = 0;
+
+    function next(){
+        if(index>=middlewares.length){
+            res.end('continue shopping')
+            return;
+        }
+
+        const current =   middlewares[index];
+        index++;
+        current(req,res,next)
+    }
+    next();
+}
+
 function shop(req,res,next){
   console.log('welcome to shop')
   console.log('items available',shopData)
@@ -37,11 +53,7 @@ else{
 
 const server = http.createServer((req,res) =>{
 
-guard (req,res,()=>{
-    shop(req,res,()=>{
-      res.end('continue shopping')
-    })
-  })
+runMiddlewares(req,res,[guard,shop])
 
 })
 
