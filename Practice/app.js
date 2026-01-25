@@ -45,12 +45,28 @@ function guard(req,res,next){
   const secretWord = req.headers['secret']
 if(secretWord === '123'){
   console.log('welcome to shop')
-  next();
+  
 }
 else{
   console.log('please retry || not permitted to enter')
   res.end("access denied")
+  return;
 }
+
+const age = req.headers['age'];
+console.log("Age check")
+
+if(age && parseInt(age)>=18){
+    console.log("You are allowed to enter")
+   
+}else{
+    console.log("Too young ")
+    res.end("Pehle thik se bade ho jaa")
+    return;
+}
+
+console.log('all checks passed')
+next();
 }
 
 function home(req,res){
