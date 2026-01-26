@@ -1,18 +1,27 @@
 
 const http = require('http');
+const { json } = require('stream/consumers');
 
-const fs = require('fs')
+const fs = require('fs').promises
 
 let shopData = [];
 
-fs.readFile('./data.json','Utf8',(err,data)=>{
-    if(err){
-        console.log('error reading file')
+async function loadData() {
+
+    try{
+const data = await fs.readFile('./data.json','utf8')
+shopData = JSON.parse(data);
+console.log('data loaded',shopData)
+    }catch(err){
+        console.log('error handling file',err)
+        shopData=[]
+    
     }
-    else{
-        shopData = JSON.parse(data);
-        console.log("data loaded",shopData)
-    }
+}
+
+loadData().then(()=>{
+    server.listen(3000)
+    console.log('server running')
 })
 
 // function runMiddlewares(req,res,middlewares){
@@ -112,6 +121,3 @@ logger(req,res,() =>{
 })
 
 })
-
-server.listen(3000);
-console.log('server running')
