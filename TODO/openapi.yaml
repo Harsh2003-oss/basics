@@ -1,0 +1,111 @@
+openapi: 3.0.0
+
+info:
+  title: Simple Todo API
+  description: API contract for a basic Todo application (Create, Update, Delete)
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+
+  /todos:
+    post:
+      summary: Create a new todo
+      description: Create a new todo item with a title.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  example: Learn Node.js
+      responses:
+        "201":
+          description: Todo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "400":
+          description: Invalid request data
+
+  /todos/{id}:
+    put:
+      summary: Update a todo
+      description: Update the title or completed status of a todo.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Learn Middleware
+                completed:
+                  type: boolean
+                  example: true
+      responses:
+        "200":
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "404":
+          description: Todo not found
+
+    delete:
+      summary: Delete a todo
+      description: Delete a todo by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        "200":
+          description: Todo deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Todo deleted successfully
+        "404":
+          description: Todo not found
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Learn Node.js
+        completed:
+          type: boolean
+          example: false
